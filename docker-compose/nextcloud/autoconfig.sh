@@ -24,13 +24,13 @@ cat <<EOF > $NEXTCLOUD/config/apps.config.php
 );
 EOF
 
-chown -R apache:apache $NEXTCLOUD
-chmod -R g=u $NEXTCLOUD
+chown -R apache:apache "$NEXTCLOUD"
+chmod -R g=u "$NEXTCLOUD"
 
-semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/data(/.*)?'
-semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/config(/.*)?'
-semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/apps(/.*)?'
-semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/.htaccess'
-semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/.user.ini'
+#semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/data(/.*)?'
+#semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/config(/.*)?'
+#semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/apps(/.*)?'
+#semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/.htaccess'
+#semanage fcontext -a -t httpd_sys_rw_content_t '$NEXTCLOUD/.user.ini'
 
-restorecon -Rv '$NEXTCLOUD'
+#restorecon -Rv '$NEXTCLOUD'
