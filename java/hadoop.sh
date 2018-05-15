@@ -1,4 +1,6 @@
-HADOOP_VER=3.1.0
+# hbase on hdfs
+# http://hbase.apache.org/book.html#hadoop
+HADOOP_VER=2.8.3
 
 wget http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz
 tar -zxf hadoop-$HADOOP_VER.tar.gz -C /usr/share/java/
