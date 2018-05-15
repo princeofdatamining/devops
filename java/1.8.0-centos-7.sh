@@ -1,4 +1,10 @@
-yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel
+if [ x"" == x"$1" ]; then
+  JAVA_VER="1.8.0"
+else
+  JAVA_VER="$1"
+fi
+
+yum install -y java-$JAVA_VER-openjdk java-$JAVA_VER-openjdk-devel
 
 # The JAVA_HOME variable should be set to a directory which contains the executable file bin/java.
 #echo "export JAVA_HOME=/usr/lib/jvm/java" >> ~/.bash_profile

@@ -1,4 +1,4 @@
-setsebool -P  httpd_unified  off
+setsebool -P httpd_unified  off
 setsebool -P httpd_can_network_connect_db on
 setsebool -P httpd_can_connect_ldap on
 setsebool -P httpd_can_network_connect on

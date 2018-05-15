@@ -1,6 +1,10 @@
 # hbase on hdfs
 # http://hbase.apache.org/book.html#hadoop
-HADOOP_VER=2.8.3
+if [ x"" == x"$1" ]; then
+  HADOOP_VER="2.8.3"
+else
+  HADOOP_VER="$1"
+fi
 
 wget http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VER/hadoop-$HADOOP_VER.tar.gz
 tar -zxf hadoop-$HADOOP_VER.tar.gz -C /usr/share/java/
