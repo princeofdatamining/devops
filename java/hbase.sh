@@ -1,3 +1,5 @@
+# hbase + hdfs
+# http://hbase.apache.org/book.html#hadoop
 HBASE_VER=2.0.0
 
 wget http://www-us.apache.org/dist/hbase/$HBASE_VER/hbase-$HBASE_VER-bin.tar.gz
