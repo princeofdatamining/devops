@@ -1,3 +1,6 @@
+# https://mariadb.com/kb/en/library/mariadb-package-repository-setup-and-usage/
+# curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
+
 yum install -y mariadb-server
 systemctl enable mariadb
 systemctl restart mariadb
