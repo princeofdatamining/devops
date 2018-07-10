@@ -1,0 +1,37 @@
+cat <<EOF > /tmp/demo.sh
+/usr/bin/date -R >> /tmp/demo.log
+EOF
+
+# bash /tmp/demo.sh
+
+
+
+# http://www.ruanyifeng.com/blog/2018/03/systemd-timer.html
+cat <<EOF > /usr/lib/systemd/system/demo.service
+[Unit]
+Description=My Timer Service
+
+[Service]
+ExecStart=/bin/bash /tmp/demo.sh
+EOF
+
+# sudo systemctl start demo.service
+
+
+
+# https://www.freedesktop.org/software/systemd/man/systemd.timer.html
+# https://www.freedesktop.org/software/systemd/man/systemd.time.html
+cat <<EOF > /usr/lib/systemd/system/demo.timer
+[Unit]
+Description=My Timer
+
+[Timer]
+Unit=demo.service
+OnCalendar=*:*:10,30,50
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# sudo systemctl start demo.timer
+# sudo systemctl enable demo.timer
