@@ -35,3 +35,12 @@ EOF
 
 # sudo systemctl start demo.timer
 # sudo systemctl enable demo.timer
+
+# systemd version 219
+# Wed *-*-* 00:00:00
+# *-*-* 00:00:00
+# *-*-* 08,11,14,17,20,23:00:00
+
+# failed at version 219
+# Wed *-*-* 00:00:00 UTC
+# *-*-* 08..23:00:00
