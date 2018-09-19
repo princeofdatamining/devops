@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  nextcloud:
+    image: jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - /mnt/jenkins:/var/jenkins_home
+    restart: always
