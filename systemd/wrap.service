@@ -1,0 +1,27 @@
+cat <<'EOF' > /path/to/start.sh
+#!/bin/sh
+
+/usr/bin/java -jar ... &
+echo $! > /var/run/service.pid
+EOF
+
+
+cat <<'EOF' > /path/to/stop.sh
+#!/bin/sh
+kill -9 $(cat /var/run/service.pid)
+EOF
+
+
+cat <<'EOF' > name.service
+[Unit]
+Description=NAME service
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/path/to/start.sh
+ExecStop=/path/to/stop.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
