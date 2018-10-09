@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="gateone.js" type="text/javascript"></script>
+
+<title>GateOne</title>
+</head>
+<body>
+<h2>hello gate one</h2>
+
+<div id="gateone_container" style="width: 60em; height: 30em;">
+    <div id="gateone"></div>
+</div>
+
+<!-- Call GateOne.init() at some point after the page is done loading -->
+<script type="text/javascript">
+    function initGateOne(auth, go_url, ssh_url) {
+        /**
+         * upn - username
+         * timestamp
+         * signature: A valid HMAC signature that is generated from the api_key, upn, and timestamp (in that order).
+         */
+        // Initialize Gate One:
+        GateOne.init({
+            auth: auth, 
+            url: go_url, 
+            theme: 'solarized',
+            autoConnectURL: ssh_url,
+            // showToolbar: false,
+            goDiv: '#gateone'
+        });
+    
+        GateOne.Net.autoConnect();
+    }
+
+    var config = {
+        go_url: "",
+        ssh_url: ""
+    };
+
+    function setUrl(go_url, ssh_url) {
+        if (!go_url)
+            go_url = config.go_url;
+        if (!ssh_url)
+            ssh_url = config.ssh_url;
+        console.log(go_url, ssh_url);
+        return function (auth) {
+            return initGateOne(auth, go_url, ssh_url);
+        }
+    }
+</script>
+
+</body>
+</html>
