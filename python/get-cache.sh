@@ -1,4 +1,4 @@
-PYTHON="3.6.5"
+PYTHON="3.6.6"
 SOURCE="https://www.python.org/ftp/python"
 
 for arg in "$@"; do

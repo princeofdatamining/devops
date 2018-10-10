@@ -1,28 +1,27 @@
 PYENV="$(realpath ~/.pyenv)"
-MNG="yum"
 
 for arg in "$@"; do
     if [ "$arg" == "yum" ]; then
-        MNG=$arg
+        yum install -y \
+            git wget curl make gcc patch \
+            openssl-devel readline-devel sqlite sqlite-devel \
+            zlib-devel bzip2 bzip2-devel
     elif [ "$arg" == "apt" ]; then
-        MNG=$arg
+        apt-get install -y \
+            git wget curl make gcc \
+            openssl libssl-dev libreadline-dev libsqlite3-dev \
+            zlib1g-dev libbz2-dev \
+            build-essential llvm libncurses5-dev xz-utils
     elif [ "$arg" == "brew" ]; then
-        MNG=$arg
+        brew install openssl readline sqlite3 zlib xz
+        xcode-select --install
     else
         PYENV="$(realpath "$arg")"
     fi
 done
 
-if [ "$MNG" == "yum" ]; then
-    yum install -y \
-        wget curl make gcc patch \
-        openssl-devel readline-devel sqlite sqlite-devel \
-        zlib-devel bzip2 bzip2-devel
-else
-    echo "$MNG install ..."
-fi
 
-cat <<EOF >> ~/.bash_profile
+[ -z "$PYENV_ROOT" ] && cat <<EOF >> ~/.bash_profile
 export PYENV_ROOT="$PYENV"
 export PATH="\$PYENV_ROOT/bin:\$PATH"
 eval "\$(pyenv init -)"
