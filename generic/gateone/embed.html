@@ -15,39 +15,48 @@
 
 <!-- Call GateOne.init() at some point after the page is done loading -->
 <script type="text/javascript">
-    function initGateOne(auth, go_url, ssh_url) {
-        /**
-         * upn - username
-         * timestamp
-         * signature: A valid HMAC signature that is generated from the api_key, upn, and timestamp (in that order).
-         */
-        // Initialize Gate One:
-        GateOne.init({
-            auth: auth, 
-            url: go_url, 
-            theme: 'solarized',
-            autoConnectURL: ssh_url,
-            // showToolbar: false,
-            goDiv: '#gateone'
-        });
-    
-        GateOne.Net.autoConnect();
-    }
-
     var config = {
         go_url: "",
         ssh_url: ""
     };
 
-    function setUrl(go_url, ssh_url) {
-        if (!go_url)
-            go_url = config.go_url;
-        if (!ssh_url)
-            ssh_url = config.ssh_url;
-        console.log(go_url, ssh_url);
-        return function (auth) {
-            return initGateOne(auth, go_url, ssh_url);
-        }
+    function initGateOne(auth, go_url, ssh_url) {
+        let URL = go_url || config.go_url,
+            SSH = ssh_url || config.ssh_url;
+        GateOne.init({
+            auth: auth, 
+            url: URL, 
+            theme: 'solarized',
+            // showToolbar: false,
+            goDiv: '#gateone'
+        }, function () {
+            let reload = 0;
+            let timer = setInterval(function () {
+                // wait sync javascript(s)
+                if ( GateOne.SSH === undefined || GateOne.Terminal === undefined )
+                    return;
+                // wait reload terminals
+                if ( reload < 10 )
+                    return reload++;
+                clearInterval(timer);
+                // 复用
+                for (let term in GateOne.Terminal.terminals) {
+                    if ( term === "count" )
+                        continue;
+                    let terminal = GateOne.Terminal.terminals[term];
+                    if ( !terminal.sshConnectString )
+                        continue;
+                    let conn = terminal.sshConnectString.replace(/:22$/, '');
+                    if ( SSH.indexOf(conn) > 0 )
+                        return GateOne.Terminal.switchTerminal(term);
+                }
+                // 创建并等待完成
+                GateOne.Terminal.newTerminal();
+                setTimeout(function () {
+                    GateOne.SSH.connect(SSH);
+                }, 500);
+            }, 200);
+        });
     }
 </script>
 

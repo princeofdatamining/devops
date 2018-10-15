@@ -72,34 +72,33 @@ cat <<'EOF' > embed.html
 
 <!-- Call GateOne.init() at some point after the page is done loading -->
 <script type="text/javascript">
-    function initGateOne(auth, go_url, ssh_url) {
-        // Initialize Gate One:
-        GateOne.init({
-            auth: auth, 
-            url: go_url, 
-            theme: 'solarized',
-            autoConnectURL: ssh_url,
-            // showToolbar: false,
-            goDiv: '#gateone'
-        });
-    
-        GateOne.Net.autoConnect();
-    }
-
     var config = {
         go_url: "",
         ssh_url: ""
     };
-
-    function setUrl(go_url, ssh_url) {
-        if (!go_url)
-            go_url = config.go_url;
-        if (!ssh_url)
-            ssh_url = config.ssh_url;
-        console.log(go_url, ssh_url);
-        return function (auth) {
-            return initGateOne(auth, go_url, ssh_url);
-        }
+    function initGateOne(auth, go_url, ssh_url) {
+        let URL = go_url || config.go_url,
+            SSH = ssh_url || config.ssh_url;
+        console.log(URL, SSH);
+        GateOne.init({
+            auth: auth, 
+            url: URL, 
+            theme: 'solarized',
+            // showToolbar: false,
+            goDiv: '#gateone'
+        }, function () {
+            // waiting:
+            //   GateOne.Net connected;
+            //   WebSocket connected;
+            //   Terminal && SSH ready;
+            let timer = setInterval(function () {
+                console.log("try connect ...");
+                if (GateOne.SSH === undefined)
+                    return;
+                clearInterval(timer);
+                GateOne.SSH.connect(SSH);
+            }, 200);
+        });
     }
 </script>
 
@@ -111,7 +110,7 @@ EOF
 $ sudo gateone
 ```
 
-### test
+### connect
 
 ```shell
 # auth object script
@@ -185,7 +184,11 @@ $ python gateoneutil.py API_KEY SECRET UPN
 
 # open https://DOMAIN_OR_IP/static/embed.html
 # open devtools & console
-# setUrl("https://DOMAIN_OR_IP/", "ssh://SSH_HOST")(AUTH_OBJ)
+# initGateOne(AUTH_OBJ, "https://DOMAIN_OR_IP/", "ssh://SSH_HOST")
+
+# If you want login with identities, please specify URL parameters, such as:
+# ssh://USER@HOST?identities=id_rsa
+# see more on https://github.com/liftoff/GateOne/issues/494
 ```
 
 ### nginx configuration

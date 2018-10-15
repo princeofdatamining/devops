@@ -48,7 +48,7 @@ var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || na
 // Sandbox-wide shortcuts
 var noop = function(a) { return a }, // Let's us reference functions that may or may not be available (see logging shortcuts below).
     ESC = String.fromCharCode(27), // Saves a lot of typing and it's easy to read
-// Log level shortcuts for each log level (these get properly assigned in GateOne.initialize() if GateOne.Logging is available)
+    // Log level shortcuts for each log level (these get properly assigned in GateOne.initialize() if GateOne.Logging is available)
     logFatal = noop,
     logError = noop,
     logWarning = noop,
@@ -177,7 +177,7 @@ GateOne.Base.superSandbox = function(name, dependencies, func) {
     :dependencies: An array of strings containing the JavaScript objects that must be present in the global namespace before we load the contained JavaScript.
     :func: A function containing the JavaScript code to execute as soon as the dependencies are available.
     */
-//     console.log('superSandbox('+name+')');
+    // console.log('superSandbox('+name+')');
     var missingDependency = false,
         exceptionMsg = "Exception calling dependency function",
         getType = {}, // Only used to check if an object is a function
@@ -222,7 +222,7 @@ GateOne.Base.superSandbox = function(name, dependencies, func) {
                         GateOne.Logging.logDebug("Dependency check function for "+dependency+" succeeded!");
                     } else {
                         // Only uncomment this if you need to debug this functionality (noisy!)
-//                         console.log("Dependency check function for "+dependency+" succeeded!");
+                        // console.log("Dependency check function for "+dependency+" succeeded!");
                     }
                 }
             } catch (e) {
@@ -346,10 +346,10 @@ var gettext = GateOne.i18n.gettext;
 // GateOne Settings
 GateOne.location = "default"; // Yes, the default location is called "default" :)
 GateOne.prefs = {
-/**:GateOne.prefs
+    /**:GateOne.prefs
 
-This object holds all of Gate One's preferences.  Both those things that are meant to be user-controlled (e.g. `theme`) and those things that are globally configured (e.g. `url`).  Applications and plugins can store their own preferences here.
-*/
+    This object holds all of Gate One's preferences.  Both those things that are meant to be user-controlled (e.g. `theme`) and those things that are globally configured (e.g. `url`).  Applications and plugins can store their own preferences here.
+    */
     auth: null, // If using API authentication, this value will hold the user's auth object (see docs for the format).
     authenticate: true, // If false, do not attempt to authenticate the user.  Only set to false if doing something like "read only" or "broadcast only" stuff.
     embedded: false, // Equivalent to {showTitle: false, showToolbar: false} and certain keyboard shortcuts won't be registered.
@@ -368,10 +368,10 @@ This object holds all of Gate One's preferences.  Both those things that are mea
     url: null // URL of the GateOne server.  Will default to whatever is in window.location.
 }
 GateOne.noSavePrefs = {
-/**:GateOne.noSavePrefs
+    /**:GateOne.noSavePrefs
 
-Properties in this object will get ignored when :js:attr:`GateOne.prefs` is saved to ``localStorage``
-*/
+    Properties in this object will get ignored when :js:attr:`GateOne.prefs` is saved to ``localStorage``
+    */
     // Plugin authors:  If you want to have your own property in GateOne.prefs but it isn't a per-user setting, add your property here
     auth: null,
     embedded: null,
@@ -595,7 +595,7 @@ var go = GateOne.Base.update(GateOne, {
 
         Called after :js:meth:`GateOne.init`, Sets up Gate One's graphical elements (panels and whatnot) and attaches events related to visuals (browser resize and whatnot).
         */
-//         console.log("GateOne.initialize()");
+        // console.log("GateOne.initialize()");
         if (GateOne.initialized) {
             // If we've already called initialize() we don't need to re-create all these panels and whatnot
             GateOne.Visual.updateDimensions(); // Just in case
@@ -1425,7 +1425,7 @@ GateOne.Base.update(GateOne.Utils, {
         go.loadedModules.forEach(function(module) {
             var moduleObj = eval(module);
             if (go.initializedModules.indexOf(moduleObj.__name__) == -1) {
-//                 console.log('Running: ' + moduleObj.__name__ + '.init()');
+                // console.log('Running: ' + moduleObj.__name__ + '.init()');
                 if (typeof(moduleObj.init) == "function") {
                     moduleObj.init();
                 }
@@ -1446,7 +1446,7 @@ GateOne.Base.update(GateOne.Utils, {
             go.loadedModules.forEach(function(module) {
                 var moduleObj = eval(module);
                 if (go.Utils._ranPostInit.indexOf(moduleObj.__name__) == -1) {
-//                     console.log('Running: ' + moduleObj.__name__ + '.postInit()');
+                    // console.log('Running: ' + moduleObj.__name__ + '.postInit()');
                     if (typeof(moduleObj.postInit) == "function") {
                         moduleObj.postInit();
                     }
@@ -2941,7 +2941,7 @@ GateOne.Base.update(GateOne.Net, {
 });
 // Protocol actions
 go.Net.actions = {
-// These are what will get called when the server sends us each respective action
+    // These are what will get called when the server sends us each respective action
     'go:log': go.Net.log,
     'go:ping': go.Net.ping,
     'go:pong': go.Net.pong,
@@ -2949,7 +2949,7 @@ go.Net.actions = {
     'go:blacklisted': go.Net.blacklisted,
     'go:locations': go.Net.locationsAction,
     'go:reauthenticate': go.Net.reauthenticate,
- // This is here because it needs to happen before most calls to init():
+    // This is here because it needs to happen before most calls to init():
     'go:register_translation': go.i18n.registerTranslationAction
 }
 
@@ -3019,7 +3019,7 @@ GateOne.Base.update(GateOne.Visual, {
             Switch to the workspace below         :kbd:`Shift-DownArrow`
             ====================================  =======================
         */
-//         console.log("GateOne.Visual.init()");
+        // console.log("GateOne.Visual.init()");
         var u = go.Utils,
             v = go.Visual,
             E = go.Events,
@@ -3102,11 +3102,11 @@ GateOne.Base.update(GateOne.Visual, {
             newWSIcon = u.getNode('#'+prefix+'icon_newws'),
             toolbarIconLocations = u.createElement('div', {'id': 'icon_locations', 'class':'✈toolbar_icon', 'title': gettext("Locations")});
         // This is temporarily commented out while I work on the locations panel:
-//         if (!existing) {
-//             toolbarIconLocations.innerHTML = go.Icons['locations'];
-//             // Add it immediately after the close workspace icon:
-//             u.insertAfter(toolbarIconLocations, newWSIcon);
-//         }
+        // if (!existing) {
+        //     toolbarIconLocations.innerHTML = go.Icons['locations'];
+        //     // Add it immediately after the close workspace icon:
+        //     u.insertAfter(toolbarIconLocations, newWSIcon);
+        // }
     },
     hideLocationsIcon: function() {
         /**:GateOne.Visual.showLocationsIcon()
@@ -3295,36 +3295,36 @@ GateOne.Base.update(GateOne.Visual, {
             return; // Don't do anything more
         }
         where = u.getNode(where);
-//         if (filteredApps.length == 1) {
-//             // No workspace created yet; check if we should launch the default app (if only one)
-//             // Check for sub-applications
-//             var subApps = [];
-//             if (filteredApps[0].sub_applications) {
-//                 filteredApps[0].sub_applications.forEach(function(settings) {
-//                     if (!settings['hidden']) {
-//                         subApps.push(settings);
-//                     }
-//                 });
-//             }
-//             if (!subApps.length) {
-//                 // If there's only one app don't bother making a listing; just launch the app
-//                 setTimeout(function() {
-//                     workspace = v.newWorkspace();
-//                     workspace.setAttribute('data-application', filteredApps[0].name);
-//                     go.loadedApplications[filteredApps[0].name].__new__(filteredApps[0], workspace);
-//                 }, 5); // Need a tiny delay here so we don't end up in a new workspace/close workspace loop
-//                 return;
-//             } else if (subApps.length == 1){
-//                 // There's only one sub-application in one app; launch it
-//                 var settings = subApps[0];
-//                 setTimeout(function() {
-//                     workspace = v.newWorkspace();
-//                     workspace.setAttribute('data-application', filteredApps[0].name);
-//                     go.loadedApplications[filteredApps[0].name].__new__(settings, workspace);
-//                 }, 5);
-//                 return;
-//             }
-//         }
+        // if (filteredApps.length == 1) {
+        //     // No workspace created yet; check if we should launch the default app (if only one)
+        //     // Check for sub-applications
+        //     var subApps = [];
+        //     if (filteredApps[0].sub_applications) {
+        //         filteredApps[0].sub_applications.forEach(function(settings) {
+        //             if (!settings['hidden']) {
+        //                 subApps.push(settings);
+        //             }
+        //         });
+        //     }
+        //     if (!subApps.length) {
+        //         // If there's only one app don't bother making a listing; just launch the app
+        //         setTimeout(function() {
+        //             workspace = v.newWorkspace();
+        //             workspace.setAttribute('data-application', filteredApps[0].name);
+        //             go.loadedApplications[filteredApps[0].name].__new__(filteredApps[0], workspace);
+        //         }, 5); // Need a tiny delay here so we don't end up in a new workspace/close workspace loop
+        //         return;
+        //     } else if (subApps.length == 1){
+        //         // There's only one sub-application in one app; launch it
+        //         var settings = subApps[0];
+        //         setTimeout(function() {
+        //             workspace = v.newWorkspace();
+        //             workspace.setAttribute('data-application', filteredApps[0].name);
+        //             go.loadedApplications[filteredApps[0].name].__new__(settings, workspace);
+        //         }, 5);
+        //         return;
+        //     }
+        // }
         titleH2.innerHTML = gettext("Gate One - Applications");
         acContainer.style.opacity = 0;
         acContainer.appendChild(titleH2);
@@ -3577,7 +3577,7 @@ GateOne.Base.update(GateOne.Visual, {
             >>> // Chain three moves of #gateone; each waiting for the previous transition to complete before continuing in the chain:
             >>> GateOne.Visual.applyTransform(GateOne.node, 'translateX(-2%)', function() { GateOne.Visual.applyTransform(GateOne.node, 'translateX(2%)') }, function() { GateOne.Visual.applyTransform(GateOne.node, ''); }, function() { console.log('transition chain complete'); });
         */
-//         logDebug('applyTransform(' + typeof(obj) + ', ' + transform + ')');
+        // logDebug('applyTransform(' + typeof(obj) + ', ' + transform + ')');
         var u = go.Utils,
             transforms = {
                 '-webkit-transform': '', // Chrome/Safari/Webkit-based stuff
@@ -4374,7 +4374,7 @@ GateOne.Base.update(GateOne.Visual, {
         //       Once setDragImage() is called we send it off-screen so it doesn't get in the way of the drop target.
         v.applyStyle(thumb, {'position': 'absolute', 'top': 0, 'left': 0, 'background': 'black'});
         // NOTE: This has been commented out because it doesn't appear to work (the drag image is still huge).
-//         v.applyStyle(thumb, {'position': 'absolute', 'top': 0, 'left': 0, 'background': 'transparent', 'width': newThumbWidth + 'px', 'height': newThumbHeight + 'px'});
+        // v.applyStyle(thumb, {'position': 'absolute', 'top': 0, 'left': 0, 'background': 'transparent', 'width': newThumbWidth + 'px', 'height': newThumbHeight + 'px'});
         v.applyTransform(thumb, 'translate(-40%, -40%) scale(0.25)');
         setTimeout(function() {
             v.applyTransform(thumb, 'translate(1000%, 1000%) scale(0.25)');
@@ -4848,7 +4848,7 @@ GateOne.Base.update(GateOne.Visual, {
                     dialogContainer.style.top = newY + 'px';
                     dialogToForeground(e);
                 } else if (dialogContainer.resizing) {
-//                     dialogContainer.className = '✈dialogcontainer';
+                    // dialogContainer.className = '✈dialogcontainer';
                     X = e.clientX + window.scrollX;
                     Y = e.clientY + window.scrollY;
                     xMoved = X - v.resizeOrigin.X;
@@ -4886,11 +4886,11 @@ GateOne.Base.update(GateOne.Visual, {
             toggleMaximize = function(e) {
                 dialogContainerStyle = getComputedStyle(dialogContainer, null); // Update with the latest info
                 var dialogDivStyle = getComputedStyle(dialogDiv, null);
-//                 if (options && !options.noTransitions) {
-//                     if (!dialogContainer.classList.contains('✈halfsectrans')) {
-//                         dialogContainer.classList.add('✈halfsectrans');
-//                     }
-//                 }
+                // if (options && !options.noTransitions) {
+                //     if (!dialogContainer.classList.contains('✈halfsectrans')) {
+                //         dialogContainer.classList.add('✈halfsectrans');
+                //     }
+                // }
                 if (options && !options.noTransitions) {
                     v.enableTransitions(dialogContainer);
                 }
@@ -5048,7 +5048,7 @@ GateOne.Base.update(GateOne.Visual, {
             dialogContainer.style.opacity = dialogContainer.opacityTemp;
         }, 50);
         minimize.innerHTML = go.Icons.minimize;
-//         minimize.onclick = minimizeDialog;
+        // minimize.onclick = minimizeDialog;
         maximize.innerHTML = go.Icons.maximize;
         maximize.onclick = toggleMaximize;
         close.innerHTML = go.Icons.panelclose;
@@ -5212,11 +5212,11 @@ GateOne.Base.update(GateOne.Visual, {
         if (existingOverlay) {
             return true;
         } else {
-//             overlay.onmousedown = function(e) {
-//                 // NOTE: Do not set 'onmousedown = go.Input.capture' as this will trigger capture() into thinking it was called via an onblur event.
-//                 u.removeElement(overlay);
-//                 v.overlay = false;
-//             }
+            // overlay.onmousedown = function(e) {
+            //     // NOTE: Do not set 'onmousedown = go.Input.capture' as this will trigger capture() into thinking it was called via an onblur event.
+            //     u.removeElement(overlay);
+            //     v.overlay = false;
+            // }
             go.node.appendChild(overlay);
             v.overlay = true;
             go.Events.trigger('go:overlay_enabled');
@@ -5670,7 +5670,7 @@ GateOne.Base.update(GateOne.Storage, {
                 }
             }
             // TODO: Investigate using indexes to speed things up.  Example (must happen inside a setVersion transaction):
-//             S.indexes[DB] = store.createIndex("urls", "url");
+            // S.indexes[DB] = store.createIndex("urls", "url");
         } catch (e) {
             S.onerror(e);
         }
@@ -5920,7 +5920,7 @@ GateOne.Base.update(GateOne.User, {
         .. tip:: If you want to call a function after the user has successfully loaded Gate One and authenticated attach it to the `go:user_login` event.
         */
         // NOTE: This will normally get run before Gate One's logger is initialized so uncomment below to debug
-//         console.log("setUsernameAction(" + username + ")");
+        // console.log("setUsernameAction(" + username + ")");
         go.User.username = username;
         go.Events.once("go:js_loaded", function() { // Needs to run after everything is loaded; this action should always get called before post-gateone.js JavaScript is loaded
             var prefsPanelUserID = u.getNode('#'+prefix+'user_info_id');
@@ -6132,7 +6132,7 @@ GateOne.Base.update(GateOne.Events, {
             args: an argument, this.foo: bar
         */
         // Commented out because it's super noisy.  Uncomment to debug
-//         logDebug("on("+events+")", callback);
+        // logDebug("on("+events+")", callback);
         events.split(/\s+/).forEach(function(event) {
             var callList = E.callbacks[event],
                 callObj = {
@@ -6177,8 +6177,8 @@ GateOne.Base.update(GateOne.Events, {
                                 if (context && callList[n].context != context) {
                                     newList.push(callList[n]);
                                 } else if (context === null && callList[n].context) {
-// If the context is undefined assume the dev wants to remove all matching callbacks for this event
-// However, if the context was set to null assume they only want to match callbacks that have no context.
+                                    // If the context is undefined assume the dev wants to remove all matching callbacks for this event
+                                    // However, if the context was set to null assume they only want to match callbacks that have no context.
                                     newList.push(callList[n]);
                                 }
                              } else {
@@ -6233,7 +6233,7 @@ GateOne.Base.update(GateOne.Events, {
                 callList.forEach(function(callObj) {
                     var context = callObj.context || this;
                     if (callObj.callback) {
-//                         logDebug("trigger(): Calling ", callObj);
+                        // logDebug("trigger(): Calling ", callObj);
                         callObj.callback.apply(context, args);
                         if (callObj.times) {
                             callObj.times -= 1;
