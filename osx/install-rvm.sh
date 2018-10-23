@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
 # https://rvm.io
 
-curl -sSL https://get.rvm.io | bash -s stable
+curl -sSL https://get.rvm.io | $SHELL -s stable
 
 # sudo usermod -aG rvm `whoami`
 
