@@ -1,0 +1,15 @@
+http://mirrors.163.com/
+https://mirrors.aliyun.com/
+http://mirrors.sohu.com/
+
+https://mirrors.tuna.tsinghua.edu.cn/
+http://mirrors.zju.edu.cn/
+http://mirror.bit.edu.cn/web/
+http://mirrors.ustc.edu.cn/
+http://mirror.bjtu.edu.cn/cn/
+https://mirrors.cqu.edu.cn/
+http://mirrors.xjtu.edu.cn/
+http://mirror.lzu.edu.cn/
+http://mirrors.hust.edu.cn/
+http://mirror.neu.edu.cn/
+http://mirror.nyist.edu.cn/

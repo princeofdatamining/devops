@@ -1,5 +1,8 @@
-wget https://dl.eff.org/certbot-auto
-chmod a+x ./certbot-auto
+# wget https://dl.eff.org/certbot-auto
+# mv certbot-auto /usr/local/bin/
+
+sudo curl -L https://dl.eff.org/certbot-auto -o /usr/local/bin/certbot-auto
+chmod a+x /usr/local/bin/certbot-auto
 
 ###########################
 ### create certificates ###

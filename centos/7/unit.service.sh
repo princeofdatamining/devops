@@ -1,7 +1,7 @@
-cat <<EOF > /etc/yum.repos.d/unit.repo
+cat <<'EOF' > /etc/yum.repos.d/unit.repo
 [unit]
 name=unit repo
-baseurl=https://packages.nginx.org/unit/centos/\$releasever/\$basearch/
+baseurl=https://packages.nginx.org/unit/centos/$releasever/$basearch/
 gpgcheck=0
 enabled=1
 EOF

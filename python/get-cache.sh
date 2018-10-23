@@ -2,7 +2,7 @@ PYTHON="3.6.6"
 SOURCE="https://www.python.org/ftp/python"
 
 for arg in "$@"; do
-    if [ "$arg" == "mirror" ]; then
+    if [ "$arg" == "sohu" ]; then
         SOURCE="http://mirrors.sohu.com/python"
     elif ! [ x"$arg" == x"" ]; then
         PYTHON=$arg

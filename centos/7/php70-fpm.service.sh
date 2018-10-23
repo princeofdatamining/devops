@@ -1,4 +1,4 @@
-cat <<EOF > /usr/lib/systemd/system/php-fpm.service
+cat <<'EOF' > /usr/lib/systemd/system/php-fpm.service
 [Unit]
 Description=The PHP FastCGI Process Manager
 After=syslog.target network.target
@@ -8,7 +8,7 @@ Type=notify
 PIDFile=/var/opt/remi/php70/run/php-fpm/php-fpm.pid
 EnvironmentFile=/etc/opt/remi/php70/sysconfig/php-fpm
 ExecStart=/opt/remi/php70/root/usr/sbin/php-fpm --nodaemonize
-ExecReload=/bin/kill -USR2 \$MAINPID
+ExecReload=/bin/kill -USR2 $MAINPID
 PrivateTmp=true
 
 [Install]
