@@ -8,6 +8,8 @@ for arg in "$@"; do
         PIP="y"
     elif [ "$arg" == "npm" ]; then
         NPM="y"
+    elif [ "$arg" == "v2ray" ]; then
+        V2RAY="y"
     elif [ "$arg" == "privoxy" ]; then
         PRIVOXY="y"
     elif [ "$arg" == "ss" ]; then
@@ -63,6 +65,17 @@ EOF
 [ "$M2" = "y" ] && mkdir -p ~/.m2 && echo "create .m2/settings.xml" && touch ~/.m2/settings.xml
 
 
+# "PAC Mode"不进行代理（不影响正常使用）；改用特定浏览器才代理（利用后续的 always.pac）
+[ "$V2RAY" = "y" ] && [ -d ~/Library/Application\ Support/V2RayX/pac ] && \
+[ ! -f ~/Library/Application\ Support/V2RayX/pac/pac.pac ] && echo "backup pac.js" && \
+cp ~/Library/Application\ Support/V2RayX/pac/pac.js ~/Library/Application\ Support/V2RayX/pac/pac.pac && \
+cat <<EOF > ~/Library/Application\ Support/V2RayX/pac/pac.js
+function FindProxyForURL(url, host) {
+    return 'DIRECT;';
+}
+EOF
+
+
 # “自动/全局模式”都不进行代理（不影响正常使用）；改用特定浏览器才代理（利用后续的 always.pac）
 [ "$SS" = "y" ] && [ -f ~/.ShadowsocksX/gfwlist.js ] && \
 [ ! -f ~/.ShadowsocksX/gfwlist.pac ] && echo "backup gfwlist.js" && \
@@ -72,9 +85,12 @@ function FindProxyForURL(url, host) {
     return 'DIRECT;';
 }
 EOF
-[ "$SS" = "y" ] && [ -d ~/.ShadowsocksX ] && echo "create always.pac" && cat <<EOF > ~/.ShadowsocksX/always.pac
+
+
+# 指定浏览器配置 always.pac 代理后，所有流量都从 ss/v2ray 走
+[ "$SS" = "y" -o "$V2RAY" = "y" ] && echo "create always.pac" && cat <<EOF > /Users/Shared/always.pac
 // see https://github.com/clowwindy/gfwlist2pac
-// file:///$HOME/.ShadowsocksX/always.pac
+// file:///Users/Shared/always.pac
 var proxy = "SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; PROXY 127.0.0.1:1088; DIRECT;";
 function FindProxyForURL(url, host) {
     return proxy;
