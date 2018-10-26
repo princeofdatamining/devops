@@ -3,6 +3,6 @@
 
 brew install xz zlib wget telnet sqlite3
 
-brew install privoxy rabbitmq redis
+brew install rabbitmq redis
 # brew services start ...
 # brew services list

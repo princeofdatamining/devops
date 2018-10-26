@@ -1,6 +1,10 @@
 
+# brew install privoxy
 # brew install putty
 # brew install mtr
+
+# swagger
+# brew install swagger-codegen
 
 # OCR
 brew install leptonica tesseract
