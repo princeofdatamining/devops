@@ -2,6 +2,7 @@
 # brew install privoxy
 # brew install putty
 # brew install mtr
+brew install tree
 
 # swagger
 # brew install swagger-codegen
@@ -9,8 +10,13 @@
 # OCR
 brew install leptonica tesseract
 
+# https://pypi.org/project/mysqlclient/
+brew install mysql-connector-c
+
 # SSL 证书(https://letsencrypt.org)
 brew install certbot
+
+# brew install dnsmasq
 
 # NoSQL 数据库
 # brew install mongodb
@@ -31,5 +37,6 @@ brew install certbot
 # brew services start ...
 # brew services list
 
+# gitbook-cli && gitbook
 npm i -g gitbook-cli
 gitbook help

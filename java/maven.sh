@@ -1,5 +1,5 @@
 if [ x"" == x"$1" ]; then
-  VERSION="3.5.3"
+  VERSION="3.5.4"
 else
   VERSION="$1"
 fi
