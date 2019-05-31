@@ -23,7 +23,7 @@ yum_set(){
     # sudo yum repolist
     sudo yum install -y curl lrzsz git
 }
-[[ $@ =~ "yum" ]] && yum_set
+[[ $@ =~ "--yum" ]] && yum_set
 
 
 cnicg_init() {
@@ -31,7 +31,7 @@ cnicg_init() {
     [ ! -d /cnicg ] && sudo mkdir /cnicg && sudo chown $(whoami):$(whoami) /cnicg
     mkdir -p /cnicg/{app,download,projs,logs} /cnicg/conf/{nginx,supervisor}/conf.d
 }
-[[ $@ =~ "cnicg" ]] && cnicg_init
+[[ $@ =~ "--cnicg" ]] && cnicg_init
 
 
 nginx_install(){
@@ -39,11 +39,10 @@ nginx_install(){
     sudo yum install nginx -y
     # append /etc/nginx/nginx.conf
     # include /cnicg/conf/nginx/conf.d/*.conf
-
     sudo systemctl enable nginx.service
     sudo systemctl start nginx.service
 }
-[[ $@ =~ "nginx" ]] && nginx_install
+[[ $@ =~ "--nginx" ]] && nginx_install
 
 
 supervisor_install() {
@@ -51,36 +50,31 @@ supervisor_install() {
     sudo yum -y install supervisor
     # append /etc/supervisord.conf
     # include /cnicg/conf/supervisor/conf.d/*.conf
-
     sudo systemctl start supervisord
     sudo systemctl enable supervisord
 }
-[[ $@ =~ "supervisor" ]] && supervisor_install
+[[ $@ =~ "--supervisor" ]] && supervisor_install
 
 
 pip_install() {
     echo "try pip_install ..."
-
     mkdir -p ~/.pip
     echo "[global]" > ~/.pip/pip.conf
     echo "cache-dir = /tmp/cache-pip" >> ~/.pip/pip.conf
     echo "index-url = http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
     echo "trusted-host = mirrors.aliyun.com" >> ~/.pip/pip.conf
-
-    # install pip3
     curl -fSL https://bootstrap.pypa.io/get-pip.py | sudo ${1:-python2}
 }
-[[ $@ =~ "pip2" ]] && pip_install
+[[ $@ =~ "--pip2" ]] && pip_install
 
 
 python3_install() {
     echo "try python3_install ..."
-
     sudo yum -y install python36 python36-devel #python36-setuptools
     pip_install python36
     echo "alias sudo='sudo env PATH=\$PATH'" | tee -a ~/.bashrc; source ~/.bashrc
 }
-[[ $@ =~ "python3" ]] && python3_install
+[[ $@ =~ "--python3" ]] && python3_install
 
 
 mongodb_install() {
@@ -89,7 +83,7 @@ mongodb_install() {
     sudo systemctl start mongod
     sudo systemctl enable mongod
 }
-[[ $@ =~ "mongodb" ]] && mongodb_install
+[[ $@ =~ "--mongodb" ]] && mongodb_install
 
 
 mariadb_install() {
@@ -97,12 +91,11 @@ mariadb_install() {
     sudo yum -y install mariadb mariadb-server mariadb-devel
     sudo systemctl start mariadb
     sudo systemctl enable mariadb
-
     # initialize root password
     # mysql_secure_installation
     # GRANT ALL PRIVILEGES ON `iot`.* TO  iot'@'localhost'
 }
-[[ $@ =~ "mariadb" ]] && mariadb_install
+[[ $@ =~ "--mariadb" ]] && mariadb_install
 
 
 rabbitmq_install() {
@@ -121,7 +114,7 @@ rabbitmq_install() {
     # 分配权限
     #sudo rabbitmqctl set_permissions -p /? ? ".*" ".*" ".*"
 }
-[[ $@ =~ "rabbitmq" ]] && rabbitmq_install
+[[ $@ =~ "--rabbitmq" ]] && rabbitmq_install
 
 
 nvm_clone() {
@@ -146,7 +139,7 @@ nvm_install() {
     # nvm ls-remote --lts | grep -i "latest"
     nvm install v10.15.3; npm i -g yarn
 }
-[[ $@ =~ "nvm" ]] && nvm_install
+[[ $@ =~ "--nvm" ]] && nvm_install
 
 
 echo "All of the base app were installed succesfull"
