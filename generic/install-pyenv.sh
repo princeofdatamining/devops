@@ -19,7 +19,7 @@ elif which yum > /dev/null; then
         openssl-devel readline-devel sqlite sqlite-devel \
         zlib-devel bzip2 bzip2-devel libffi-devel
 elif which apt-get > /dev/null; then
-    apt-get install -y \
+    sudo apt-get install -y \
         git wget curl make gcc \
         openssl libssl-dev libreadline-dev libsqlite3-dev \
         zlib1g-dev libbz2-dev \

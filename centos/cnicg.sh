@@ -58,8 +58,8 @@ supervisor_install() {
 [[ $@ =~ "supervisor" ]] && supervisor_install
 
 
-python3_install() {
-    echo "try python3_install ..."
+pip_install() {
+    echo "try pip_install ..."
 
     mkdir -p ~/.pip
     echo "[global]" > ~/.pip/pip.conf
@@ -67,12 +67,18 @@ python3_install() {
     echo "index-url = http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
     echo "trusted-host = mirrors.aliyun.com" >> ~/.pip/pip.conf
 
-    sudo yum -y install python36 python36-devel #python36-setuptools
-
     # install pip3
-    curl -fSL https://bootstrap.pypa.io/get-pip.py | sudo python36
+    curl -fSL https://bootstrap.pypa.io/get-pip.py | sudo ${1:-python2}
+}
+[[ $@ =~ "pip2" ]] && pip_install
+
+
+python3_install() {
+    echo "try python3_install ..."
+
+    sudo yum -y install python36 python36-devel #python36-setuptools
+    pip_install python36
     echo "alias sudo='sudo env PATH=\$PATH'" | tee -a ~/.bashrc; source ~/.bashrc
-    #sudo pip3 install uwsgi
 }
 [[ $@ =~ "python3" ]] && python3_install
 

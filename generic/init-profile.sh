@@ -29,6 +29,7 @@ export PATH="\$rvm_path/bin:\$PATH"
 [ -f "\$rvm_path/scripts/rvm" ] && source "\$rvm_path/scripts/rvm"
 
 if [ -f "/usr/libexec/java_home" ]; then
+    # export JAVA_HOME=\$(/usr/libexec/java_home -v1.8)
     export JAVA_HOME=\$(/usr/libexec/java_home)
     export JAVA_DIR="$WORKDIR/java"
     export PATH="\$PATH:\$JAVA_DIR/apache-maven-3.5.0/bin"
