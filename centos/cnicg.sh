@@ -29,7 +29,8 @@ yum_set(){
 cnicg_init() {
     echo "try cnicg_init ..."
     [ ! -d /cnicg ] && sudo mkdir /cnicg && sudo chown $(whoami):$(whoami) /cnicg
-    mkdir -p /cnicg/{app,download,projs,logs} /cnicg/conf/{nginx,supervisor}/conf.d
+    mkdir -p /cnicg/{app,download,projs,logs} /cnicg/conf/{nginx,supervisor}/conf.d /cnicg/conf/nginx/optimize
+    touch /cnicg/conf/nginx/optimize/{ssl,gzip,favicon,robots}.conf
 }
 [[ $@ =~ "--cnicg" ]] && cnicg_init
 
