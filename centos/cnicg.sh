@@ -6,7 +6,7 @@
 # 创建用户：sudo useradd -G wheel USERNAME
 # 配置密码：sudo passwd USERNAME
 
-yum_set(){
+yum_set() {
     echo "try yum_set ..."
     sudo yum install -y wget
 
@@ -35,7 +35,18 @@ cnicg_init() {
 [[ $@ =~ "--cnicg" ]] && cnicg_init
 
 
-nginx_install(){
+nginx_yum_repo() {
+sudo cat <<'EOF' > /etc/yum.repos.d/nginx.repo
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+EOF
+}
+[[ $@ =~ "--nginx-repo" ]] && nginx_yum_repo
+
+nginx_install() {
     echo "try nginx_install ..."
     sudo yum install nginx -y
     # append /etc/nginx/nginx.conf
@@ -65,6 +76,8 @@ pip_install() {
     echo "index-url = http://mirrors.aliyun.com/pypi/simple/" >> ~/.pip/pip.conf
     echo "trusted-host = mirrors.aliyun.com" >> ~/.pip/pip.conf
     curl -fSL https://bootstrap.pypa.io/get-pip.py | sudo ${1:-python2}
+    # 如果出现错误：“sudo: pip3：找不到命令”
+    # 改用： sudo `which pip3` ...
 }
 [[ $@ =~ "--pip2" ]] && pip_install
 
@@ -73,7 +86,6 @@ python3_install() {
     echo "try python3_install ..."
     sudo yum -y install python36 python36-devel #python36-setuptools
     pip_install python36
-    echo "alias sudo='sudo env PATH=\$PATH'" | tee -a ~/.bashrc; source ~/.bashrc
 }
 [[ $@ =~ "--python3" ]] && python3_install
 
