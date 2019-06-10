@@ -36,7 +36,7 @@ cnicg_init() {
 
 
 nginx_yum_repo() {
-sudo cat <<'EOF' > /etc/yum.repos.d/nginx.repo
+cat <<'EOF' | sudo tee /etc/yum.repos.d/nginx.repo
 [nginx]
 name=nginx repo
 baseurl=http://nginx.org/packages/centos/7/$basearch/
